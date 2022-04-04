@@ -15,6 +15,7 @@ constructor() {
     this._handleToneMapperChange = this._handleToneMapperChange.bind(this);
     this._handleVolumeLoad = this._handleVolumeLoad.bind(this);
     this._handleEnvmapLoad = this._handleEnvmapLoad.bind(this);
+    this._handleTemporalLoad = this._handleTemporalLoad.bind(this);
 
     this._renderingContext = new RenderingContext();
     this._canvas = this._renderingContext.getCanvas();
@@ -46,6 +47,10 @@ constructor() {
     this._envmapLoadDialog = new EnvmapLoadDialog();
     this._envmapLoadDialog.appendTo(this._mainDialog.getEnvmapLoadContainer());
     this._envmapLoadDialog.addEventListener('load', this._handleEnvmapLoad);
+
+    this._temporalLoadDialog = new TemporalLoadDialog();
+    this._temporalLoadDialog.appendTo(this._mainDialog.getTemporalLoadContainer());
+    this._temporalLoadDialog.addEventListener('load', this._handleTemporalLoad)
 
     this._renderingContextDialog = new RenderingContextDialog();
     this._renderingContextDialog.appendTo(
@@ -119,6 +124,32 @@ _handleToneMapperChange() {
 }
 
 _handleVolumeLoad(e) {
+    const options = e.detail;
+    if (options.type === 'file') {
+        const readerClass = this._getReaderForFileType(options.filetype);
+        if (readerClass) {
+            const loader = new BlobLoader(options.file);
+            const reader = new readerClass(loader, {
+                width  : options.dimensions.x,
+                height : options.dimensions.y,
+                depth  : options.dimensions.z,
+                bits   : options.precision
+            });
+            this._renderingContext.stopRendering();
+            this._renderingContext.setVolume(reader);
+        }
+    } else if (options.type === 'url') {
+        const readerClass = this._getReaderForFileType(options.filetype);
+        if (readerClass) {
+            const loader = new AjaxLoader(options.url);
+            const reader = new readerClass(loader);
+            this._renderingContext.stopRendering();
+            this._renderingContext.setVolume(reader);
+        }
+    }
+}
+
+_handleTemporalLoad(e) {
     const options = e.detail;
     if (options.type === 'file') {
         const readerClass = this._getReaderForFileType(options.filetype);

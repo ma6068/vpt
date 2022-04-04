@@ -23,6 +23,11 @@
                   "type": "accordion",
                   "bind": "envmapLoadContainer",
                   "label": "Environment"
+                },
+                {
+                  "type": "accordion",
+                  "bind": "temporalLoadContainer",
+                  "label": "Temporal"
                 }
               ]
             },

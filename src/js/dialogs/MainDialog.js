@@ -30,6 +30,10 @@ getEnvmapLoadContainer() {
     return this._binds.envmapLoadContainer;
 }
 
+getTemporalLoadContainer() {
+    return this._binds.temporalLoadContainer;
+}
+
 getRendererSettingsContainer() {
     return this._binds.rendererSettingsContainer;
 }
