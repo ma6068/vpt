@@ -54,10 +54,26 @@ setValue(value) {
     if (this.logarithmic) {
         this._binds.input.step = this.value * this.step;
     }
+    this._binds.input.value = this.value;
 }
 
 getValue() {
     return this.value;
+}
+
+setMinValue(value) {
+    this.min = value;
+    this._binds.input.min = value;
+}
+
+setMaxValue(value) {
+    this.max = value;
+    this._binds.input.max = value;
+}
+
+setStepValue(value) {
+    this.step = value;
+    this._binds.input.step = value;
 }
 
 _handleInput(e) {

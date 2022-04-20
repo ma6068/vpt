@@ -39,4 +39,8 @@ add(object) {
     }
 }
 
+setLabelValue(labelValue) {
+    this._binds.label.textContent = labelValue;
+}
+
 }

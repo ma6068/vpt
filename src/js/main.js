@@ -39,6 +39,9 @@ let MIXINS;
 let TEMPLATES;
 let UISPECS;
 
+document.time_error_spinner = 500;
+
+
 document.addEventListener('DOMContentLoaded', async () => {
     const rl = ResourceLoader.instance;
     [ SHADERS, MIXINS, TEMPLATES, UISPECS ] = await Promise.all([

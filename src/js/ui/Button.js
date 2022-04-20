@@ -19,4 +19,8 @@ setEnabled(enabled) {
     super.setEnabled(enabled);
 }
 
+setLabelValue(labelValue) {
+    this._binds.input.value = labelValue;
+}
+
 }

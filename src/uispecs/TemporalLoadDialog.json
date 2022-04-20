@@ -1,110 +1,235 @@
 // #part /uispecs/TemporalLoadDialog
 
 {
-    "type": "panel",
-    "children": [
-      {
-        "type": "field",
-        "label": "Type:",
-        "children": [
-          {
-            "type": "dropdown",
-            "bind": "type",
-            "options": [
-              {
-                "value": "file",
-                "label": "File",
-                "selected": true
-              },
-              {
-                "value": "url",
-                "label": "URL"
-              },
-              {
-                "value": "demo",
-                "label": "Demo"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "type": "panel",
-        "bind": "filePanel",
-        "visible": true,
-        "children": [
-          {
-            "type": "field",
-            "label": "File:",
-            "children": [
-              {
-                "type": "file-chooser",
-                "bind": "file"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "type": "panel",
-        "bind": "urlPanel",
-        "visible": false,
-        "children": [
-          {
-            "type": "field",
-            "label": "URL:",
-            "children": [
-              {
-                "type": "textbox",
-                "bind": "url",
-                "placeholder": "http://"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "type": "panel",
-        "bind": "demoPanel",
-        "visible": false,
-        "children": [
-          {
-            "type": "field",
-            "label": "File:",
-            "children": [
-              {
-                "type": "dropdown",
-                "bind": "demo"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "type": "panel",
-        "bind": "loadButtonAndProgress",
-        "visible": false,
-        "children": [
-          {
-            "type": "field",
-            "children": [
-              {
-                "type": "button",
-                "bind": "loadButton",
-                "label": "Load"
-              }
-            ]
-          },
-          {
-            "type": "field",
-            "children": [
-              {
-                "type": "progress-bar",
-                "bind": "loadProgress"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+  "type": "panel",
+  "children": [
+    {
+      "type": "field",
+      "label": "Type:",
+      "children": [
+        {
+          "type": "dropdown",
+          "bind": "type",
+          "options": [
+            {
+              "value": "file",
+              "label": "File",
+              "selected": true
+            },
+            {
+              "value": "url",
+              "label": "URL"
+            },
+            {
+              "value": "demo",
+              "label": "Demo"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "panel",
+      "bind": "filePanel",
+      "visible": true,
+      "children": [
+        {
+          "type": "field",
+          "label": "File:",
+          "children": [
+            {
+              "type": "file-chooser",
+              "bind": "file"
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "bind": "rawSettingsPanel",
+          "visible": false,
+          "children": [
+            {
+              "type": "field",
+              "label": "Dimensions:",
+              "children": [
+                {
+                  "type": "vector",
+                  "bind": "dimensions",
+                  "value": 128,
+                  "min": 1
+                }
+              ]
+            },
+            {
+              "type": "field",
+              "label": "Precision:",
+              "children": [
+                {
+                  "type": "radio",
+                  "bind": "precision",
+                  "options": [
+                    {
+                      "value": 8,
+                      "label": "8-bit",
+                      "selected": true
+                    },
+                    {
+                      "value": 16,
+                      "label": "16-bit"
+                    },
+                    {
+                      "value": 32,
+                      "label": "32-bit"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "panel",
+      "bind": "urlPanel",
+      "visible": false,
+      "children": [
+        {
+          "type": "field",
+          "label": "URL:",
+          "children": [
+            {
+              "type": "textbox",
+              "bind": "url",
+              "placeholder": "http://"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "panel",
+      "bind": "demoPanel",
+      "visible": false,
+      "children": [
+        {
+          "type": "field",
+          "label": "File:",
+          "children": [
+            {
+              "type": "dropdown",
+              "bind": "demo"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "panel",
+      "bind": "loadButtonAndProgress",
+      "visible": false,
+      "children": [
+        {
+          "type": "field",
+          "children": [
+            {
+              "type": "button",
+              "bind": "loadButton",
+              "label": "Load"
+            }
+          ]
+        },
+        {
+          "type": "field",
+          "children": [
+            {
+              "type": "progress-bar",
+              "bind": "loadProgress"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "panel",
+      "children":
+      [
+        {
+          "type": "field",
+          "label": "Render type:",
+          "children":
+          [
+            {
+              "type": "dropdown",
+              "bind": "renderType",
+              "options": 
+              [
+                {
+                  "label": "Rendering time (ms)",
+                  "selected": true,
+                  "value": "timeValue"
+                },
+                {
+                  "label": "Allowed error",
+                  "value": "errorValue"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "field",
+          "label": "Milliseconds:",
+          "bind": "timeErrorLabel",
+          "children":
+          [
+            {
+              "type": "spinner",
+              "bind": "timeErrorSpinner",
+              "value": "500",
+              "min": "500",
+              "max": "50000",
+              "step": "500"
+            }
+          ]
+        },
+        {
+          "type": "field",
+          "label": "Frame",
+          "children": [
+            {
+              "type": "spinner",
+              "bind": "frameSpinner",
+              "value": 0,
+              "min": 0,
+              "max": 0
+            }
+          ]
+        },
+        {
+          "type": "slider",
+          "bind": "frameSlider",
+          "value": 0,
+          "min": 0,
+          "max": 1,
+          "step": 1
+        },
+        {
+          "type": "button",
+          "bind": "previousButton",
+          "label": "Previous"
+        },
+        {
+          "type": "button",
+          "bind": "playButton",
+          "label": "Play"
+        },
+        {
+          "type": "button",
+          "bind": "nextButton",
+          "label": "Next"
+        }
+      ]
+    }
+  ]
+}

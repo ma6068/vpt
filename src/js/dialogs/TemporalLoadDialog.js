@@ -14,19 +14,83 @@ class TemporalLoadDialog extends AbstractDialog {
         this._handleFileChange = this._handleFileChange.bind(this);
         this._handleURLChange = this._handleURLChange.bind(this);
         this._handleDemoChange = this._handleDemoChange.bind(this);
-    
+
+        // Dodadeno
+        this._handleRenderType = this._handleRenderType.bind(this);
+        this._handleTimeLabelSpinner = this._handleTimeLabelSpinner.bind(this);
+        this._handleErrorLabelSpinner = this._handleErrorLabelSpinner.bind(this);
+        this._handleFrameSpinner = this._handleFrameSpinner.bind(this);
+        this._handleFrameSlider = this._handleFrameSlider.bind(this);
+        this._handlePreviousButton = this._handlePreviousButton.bind(this);
+        this._handlePlayButton = this._handlePlayButton.bind(this);
+        this._handleNextButton = this._handleNextButton.bind(this);
+        // Dodadeno kraj
+
         this._demos = [];
     
         this._addEventListeners();
         this._loadDemoJson();
     }
-    
+
     _addEventListeners() {
         this._binds.type.addEventListener('change', this._handleTypeChange);
         this._binds.loadButton.addEventListener('click', this._handleLoadClick);
         this._binds.file.addEventListener('change', this._handleFileChange);
         this._binds.url.addEventListener('input', this._handleURLChange);
         this._binds.demo.addEventListener('change', this._handleDemoChange);
+
+        // Dodadeno 
+        this._binds.renderType.addEventListener('change', this._handleRenderType)
+        // Dodadeno kraj
+    }
+
+    _handleRenderType() {
+        var renderTypeLabel = this._binds.renderType.getValue();
+        if (renderTypeLabel == "timeValue") {
+            this._handleTimeLabelSpinner();
+        }
+        else if (renderTypeLabel == "errorValue") {
+            this._handleErrorLabelSpinner();
+        }
+    }
+
+    _handleTimeLabelSpinner() {
+        this._binds.timeErrorLabel.setLabelValue("Milliseconds:");
+        this._binds.timeErrorSpinner.setValue(500);
+        this._binds.timeErrorSpinner.setMinValue(500);
+        this._binds.timeErrorSpinner.setMaxValue(5000);
+        this._binds.timeErrorSpinner.setStepValue(1000);
+        document.time_error_spinner = 500;
+    }
+
+    _handleErrorLabelSpinner() {
+        debugger;
+        this._binds.timeErrorLabel.setLabelValue("Threshold:");
+        this._binds.timeErrorSpinner.setValue(0.2);
+        this._binds.timeErrorSpinner.setMinValue(0);
+        this._binds.timeErrorSpinner.setMaxValue(3);
+        this._binds.timeErrorSpinner.setStepValue(0.1);
+        document.time_error_spinner = 0.2;
+    }
+
+    _handleFrameSpinner() {
+        // TODO: napisi ja funkcijata
+    }
+
+    _handleFrameSlider() {
+        // TODO: napisi ja funkcijata
+    }
+
+    _handlePlayButton() {
+        // TODO: napisi ja funkcijata
+    }
+
+    _handlePreviousButton() {
+        // TODO: napisi ja funkcijata
+    }
+
+    _handleNextButton() {
+        // TODO: napisi ja funkcijata
     }
     
     async _loadDemoJson() {
