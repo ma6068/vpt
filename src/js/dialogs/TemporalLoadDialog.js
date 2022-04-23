@@ -40,7 +40,10 @@ class TemporalLoadDialog extends AbstractDialog {
         this._binds.demo.addEventListener('change', this._handleDemoChange);
 
         // Dodadeno 
-        this._binds.renderType.addEventListener('change', this._handleRenderType)
+        this._binds.renderType.addEventListener('change', this._handleRenderType);
+        this._binds.previousButton.addEventListener('click', this._handlePreviousButton);
+        this._binds.playButton.addEventListener('click', this._handlePlayButton);
+        this._binds.nextButton.addEventListener('click', this._handleNextButton);
         // Dodadeno kraj
     }
 
@@ -64,7 +67,6 @@ class TemporalLoadDialog extends AbstractDialog {
     }
 
     _handleErrorLabelSpinner() {
-        debugger;
         this._binds.timeErrorLabel.setLabelValue("Threshold:");
         this._binds.timeErrorSpinner.setValue(0.2);
         this._binds.timeErrorSpinner.setMinValue(0);
@@ -82,7 +84,16 @@ class TemporalLoadDialog extends AbstractDialog {
     }
 
     _handlePlayButton() {
-        // TODO: napisi ja funkcijata
+        if(document.file_detail) {
+            if(document.is_playing) {
+                this._binds.playButton.setLabelValue("Play");
+                document.is_playing = false;
+            }
+            else{
+                this._binds.playButton.setLabelValue("Stop");
+                document.is_playing = true;
+            }
+        }
     }
 
     _handlePreviousButton() {
@@ -134,8 +145,8 @@ class TemporalLoadDialog extends AbstractDialog {
         const filetype = this._getVolumeTypeFromURL(file.name);
         const dimensions = this._binds.dimensions.getValue();
         const precision = parseInt(this._binds.precision.getValue(), 10);
-    
-        this.dispatchEvent(new CustomEvent('load', {
+        
+        document.file_detail =  {
             detail: {
                 type       : 'file',
                 file       : file,
@@ -143,7 +154,9 @@ class TemporalLoadDialog extends AbstractDialog {
                 dimensions : dimensions,
                 precision  : precision,
             }
-        }));
+        }
+
+        this.dispatchEvent(new CustomEvent('load', document.file_detail));
     }
     
     _handleLoadURL() {

@@ -40,7 +40,7 @@ let TEMPLATES;
 let UISPECS;
 
 document.time_error_spinner = 500;
-
+document.is_playing = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
     const rl = ResourceLoader.instance;
