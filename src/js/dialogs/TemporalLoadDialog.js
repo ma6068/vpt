@@ -42,6 +42,8 @@ class TemporalLoadDialog extends AbstractDialog {
         this._binds.previousButton.addEventListener('click', this._handlePreviousButton);
         this._binds.playButton.addEventListener('click', this._handlePlayButton);
         this._binds.nextButton.addEventListener('click', this._handleNextButton);
+        this._binds.frameSlider.addEventListener('change', this._handleFrameSlider);
+        this._binds.frameSpinner.addEventListener('change', this._handleFrameSpinner);
         // Dodadeno kraj
     }
 
@@ -65,11 +67,35 @@ class TemporalLoadDialog extends AbstractDialog {
     }
 
     _handleFrameSpinner() {
-        // TODO: napisi ja funkcijata
+        if (document.file_detail) {
+            document.current_frame = this._binds.frameSpinner.getValue();
+            this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
+            this._binds.frameSpinner.setValue(document.current_frame);
+            this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
+            // go spopirame ako e pusteno
+            if (document.is_playing) {
+                this._binds.playButton.setLabelValue("Play");
+                document.is_playing = false;
+                window.clearInterval(document.time_error_interval);           
+            }
+            this.dispatchEvent('load', document.file_detail);
+        }
     }
 
     _handleFrameSlider() {
-        // TODO: napisi ja funkcijata
+        if (document.file_detail) {
+            document.current_frame = Math.floor(this._binds.frameSlider.getValue())
+            this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
+            this._binds.frameSpinner.setValue(document.current_frame);
+            this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
+            // go spopirame ako e pusteno
+            if (document.is_playing) {
+                this._binds.playButton.setLabelValue("Play");
+                document.is_playing = false;
+                window.clearInterval(document.time_error_interval);           
+            }
+            this.dispatchEvent('load', document.file_detail);
+        }
     }
 
     _updateCurrentVolume() {
