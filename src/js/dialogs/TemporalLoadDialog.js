@@ -72,6 +72,16 @@ class TemporalLoadDialog extends AbstractDialog {
         // TODO: napisi ja funkcijata
     }
 
+    _updateCurrentVolume() {
+        document.current_frame += 1;
+        if (document.current_frame == document.max_frames) {
+            document.current_frame = 0;
+        }
+        this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
+        this._binds.frameSpinner.setValue(document.current_frame);
+        this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
+    }
+
     _handlePlayButton() {
         if(document.file_detail) {
             if(document.is_playing == false) {
@@ -93,7 +103,7 @@ class TemporalLoadDialog extends AbstractDialog {
                     
                 }
                 else {
-                    
+
                 }
             } 
         }

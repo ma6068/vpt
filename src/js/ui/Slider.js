@@ -39,6 +39,12 @@ setValue(value) {
     this.trigger('change');
 }
 
+setValueAndUpdateMax(value, newMax) {
+    this.value = Math.min(Math.max(value, this.min), this.max);
+    this.max = newMax;
+    this._updateUI();
+}
+
 _updateUI() {
     if (this.logarithmic) {
         const logmin = Math.log(this.min);
