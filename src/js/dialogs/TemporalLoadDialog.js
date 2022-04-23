@@ -22,6 +22,7 @@ class TemporalLoadDialog extends AbstractDialog {
         this._handlePreviousButton = this._handlePreviousButton.bind(this);
         this._handlePlayButton = this._handlePlayButton.bind(this);
         this._handleNextButton = this._handleNextButton.bind(this);
+        this._handle_TimeErrorSpinner = this._handle_TimeErrorSpinner.bind(this);
         // Dodadeno kraj
 
         this._demos = [];
@@ -44,20 +45,22 @@ class TemporalLoadDialog extends AbstractDialog {
         this._binds.nextButton.addEventListener('click', this._handleNextButton);
         this._binds.frameSlider.addEventListener('change', this._handleFrameSlider);
         this._binds.frameSpinner.addEventListener('change', this._handleFrameSpinner);
+        this._binds.timeErrorSpinner.addEventListener('change', this._handle_TimeErrorSpinner);
         // Dodadeno kraj
     }
 
     _handleRenderType() {
-        if (this._binds.renderType.getValue() == "timeValue") {
-            this._binds.timeErrorLabel.setLabelValue("Milliseconds:");
+        document.time_or_error = this._binds.renderType.getValue();
+        if (document.time_or_error == 'timeValue') {
+            this._binds.timeErrorLabel.setLabelValue('Milliseconds:');
             this._binds.timeErrorSpinner.setValue(500);
             this._binds.timeErrorSpinner.setMinValue(500);
             this._binds.timeErrorSpinner.setMaxValue(5000);
             this._binds.timeErrorSpinner.setStepValue(1000);
             document.time_error_spinner = 500;
         }
-        else if (this._binds.renderType.getValue() == "errorValue") {
-            this._binds.timeErrorLabel.setLabelValue("Threshold:");
+        else {
+            this._binds.timeErrorLabel.setLabelValue('Threshold:');
             this._binds.timeErrorSpinner.setValue(0.2);
             this._binds.timeErrorSpinner.setMinValue(0);
             this._binds.timeErrorSpinner.setMaxValue(3);
@@ -90,7 +93,7 @@ class TemporalLoadDialog extends AbstractDialog {
             this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
             // go spopirame ako e pusteno
             if (document.is_playing) {
-                this._binds.playButton.setLabelValue("Play");
+                this._binds.playButton.setLabelValue('Play');
                 document.is_playing = false;
                 window.clearInterval(document.time_error_interval);           
             }
@@ -111,7 +114,7 @@ class TemporalLoadDialog extends AbstractDialog {
 
     _errorCheck() {
         if (document.current_error <= document.time_error_spinner || isNaN(document.current_error)) {
-            console.log("Error now:" + document.current_error);
+            console.log('Error now:' + document.current_error);
             this._updateCurrentVolume();
         }
     }
@@ -120,9 +123,9 @@ class TemporalLoadDialog extends AbstractDialog {
         if(document.file_detail) {
             if(document.is_playing == false) {
                 // go pustame
-                this._binds.playButton.setLabelValue("Stop");
+                this._binds.playButton.setLabelValue('Stop');
                 document.is_playing = true;
-                if (this._binds.renderType.getValue() == "timeValue") {
+                if (document.time_or_error == 'timeValue') {
                     document.time_error_interval = window.setInterval(this._updateCurrentVolume, document.time_error_spinner);
                 }
                 else {
@@ -131,7 +134,7 @@ class TemporalLoadDialog extends AbstractDialog {
             }
             else {
                 // go stopirame 
-                this._binds.playButton.setLabelValue("Play");
+                this._binds.playButton.setLabelValue('Play');
                 document.is_playing = false;
                 window.clearInterval(document.time_error_interval);
             } 
@@ -142,7 +145,7 @@ class TemporalLoadDialog extends AbstractDialog {
         if (document.file_detail) {
             // go spopirame ako e pusteno
             if (document.is_playing) {
-                this._binds.playButton.setLabelValue("Play");
+                this._binds.playButton.setLabelValue('Play');
                 document.is_playing = false;
                 window.clearInterval(document.time_error_interval);           
             }
@@ -161,7 +164,7 @@ class TemporalLoadDialog extends AbstractDialog {
         if (document.file_detail) {
             // go spopirame ako e pusteno
             if (document.is_playing) {
-                this._binds.playButton.setLabelValue("Play");
+                this._binds.playButton.setLabelValue('Play');
                 document.is_playing = false;
                 window.clearInterval(document.time_error_interval);           
             }
@@ -172,6 +175,19 @@ class TemporalLoadDialog extends AbstractDialog {
                 this._binds.frameSpinner.setValue(document.current_frame);
                 this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
                 this.dispatchEvent('load', document.file_detail);
+            }
+        }
+    }
+
+    _handle_TimeErrorSpinner() {
+        document.timeErrorSpinner = this._binds.timeErrorSpinner.getValue();
+        if (document.is_playing) {
+            window.clearInterval(document.time_error_interval);
+            if (document.time_or_error == 'timeValue') {
+                document.time_error_interval = window.setInterval(this._updateCurrentVolume, document.time_error_spinner);
+            }
+            else {
+                document.time_error_interval = window.setInterval(this._errorCheck, 100);
             }
         }
     }

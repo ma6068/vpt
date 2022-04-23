@@ -44,6 +44,7 @@ document.is_playing = false;
 document.current_frame = 0;
 document.max_frames = 1;
 document.current_error = 0;
+document.time_or_error = 'timeValue';   // mozni vrednosti: timeValue / errorValue
 
 
 document.addEventListener('DOMContentLoaded', async () => {
