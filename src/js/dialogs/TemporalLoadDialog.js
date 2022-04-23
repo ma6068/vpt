@@ -85,7 +85,7 @@ class TemporalLoadDialog extends AbstractDialog {
                 document.is_playing = false;
                 window.clearInterval(document.time_error_interval);           
             }
-            this.dispatchEvent('load', document.file_detail);
+            this.dispatchEvent(new CustomEvent('load', document.file_detail));
         }
     }
 
@@ -101,7 +101,7 @@ class TemporalLoadDialog extends AbstractDialog {
                 document.is_playing = false;
                 window.clearInterval(document.time_error_interval);           
             }
-            this.dispatchEvent('load', document.file_detail);
+            this.dispatchEvent(new CustomEvent('load', document.file_detail));
         }
     }
 
@@ -113,7 +113,7 @@ class TemporalLoadDialog extends AbstractDialog {
         this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
         this._binds.frameSpinner.setValue(document.current_frame);
         this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
-        this.dispatchEvent('load', document.file_detail);
+        this.dispatchEvent(new CustomEvent('load', document.file_detail));
     }
 
     _errorCheck() {
@@ -159,7 +159,7 @@ class TemporalLoadDialog extends AbstractDialog {
                 this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
                 this._binds.frameSpinner.setValue(document.current_frame);
                 this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
-                this.dispatchEvent('load', document.file_detail);
+                this.dispatchEvent(new CustomEvent('load', document.file_detail));
             }
         }
     }
@@ -178,7 +178,7 @@ class TemporalLoadDialog extends AbstractDialog {
                 this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
                 this._binds.frameSpinner.setValue(document.current_frame);
                 this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
-                this.dispatchEvent('load', document.file_detail);
+                this.dispatchEvent(new CustomEvent('load', document.file_detail));
             }
         }
     }
