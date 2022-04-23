@@ -80,6 +80,14 @@ class TemporalLoadDialog extends AbstractDialog {
         this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
         this._binds.frameSpinner.setValue(document.current_frame);
         this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
+        this.dispatchEvent('load', document.file_detail);
+    }
+
+    _errorCheck() {
+        if (document.current_error <= document.time_error_spinner || isNaN(document.current_error)) {
+            console.log("Error now:" + document.current_error);
+            this._updateCurrentVolume();
+        }
     }
 
     _handlePlayButton() {
@@ -89,32 +97,57 @@ class TemporalLoadDialog extends AbstractDialog {
                 this._binds.playButton.setLabelValue("Stop");
                 document.is_playing = true;
                 if (this._binds.renderType.getValue() == "timeValue") {
-                    
+                    document.time_error_interval = window.setInterval(this._updateCurrentVolume, document.time_error_spinner);
                 }
                 else {
-
+                    document.time_error_interval = window.setInterval(this._errorCheck, 100)
                 }
             }
             else {
                 // go stopirame 
                 this._binds.playButton.setLabelValue("Play");
                 document.is_playing = false;
-                if (this._binds.renderType.getValue() == "timeValue") {
-                    
-                }
-                else {
-
-                }
+                window.clearInterval(document.time_error_interval);
             } 
         }
     }
 
     _handlePreviousButton() {
-        // TODO: napisi ja funkcijata
+        if (document.file_detail) {
+            // go spopirame ako e pusteno
+            if (document.is_playing) {
+                this._binds.playButton.setLabelValue("Play");
+                document.is_playing = false;
+                window.clearInterval(document.time_error_interval);           
+            }
+            // go vrakame nazad za 1 frame
+            if (document.current_frame > 0) {
+                document.current_frame -= 1;
+                this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
+                this._binds.frameSpinner.setValue(document.current_frame);
+                this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
+                this.dispatchEvent('load', document.file_detail);
+            }
+        }
     }
 
     _handleNextButton() {
-        // TODO: napisi ja funkcijata
+        if (document.file_detail) {
+            // go spopirame ako e pusteno
+            if (document.is_playing) {
+                this._binds.playButton.setLabelValue("Play");
+                document.is_playing = false;
+                window.clearInterval(document.time_error_interval);           
+            }
+            // go noseme napred za 1 frame
+            if (document.current_frame + 1 < document.max_frames) {
+                document.current_frame += 1;
+                this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
+                this._binds.frameSpinner.setValue(document.current_frame);
+                this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
+                this.dispatchEvent('load', document.file_detail);
+            }
+        }
     }
     
     async _loadDemoJson() {

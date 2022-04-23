@@ -43,6 +43,7 @@ document.time_error_spinner = 500;
 document.is_playing = false;
 document.current_frame = 0;
 document.max_frames = 1;
+document.current_error = 0;
 
 
 document.addEventListener('DOMContentLoaded', async () => {
