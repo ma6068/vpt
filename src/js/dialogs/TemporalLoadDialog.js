@@ -17,8 +17,6 @@ class TemporalLoadDialog extends AbstractDialog {
 
         // Dodadeno
         this._handleRenderType = this._handleRenderType.bind(this);
-        this._handleTimeLabelSpinner = this._handleTimeLabelSpinner.bind(this);
-        this._handleErrorLabelSpinner = this._handleErrorLabelSpinner.bind(this);
         this._handleFrameSpinner = this._handleFrameSpinner.bind(this);
         this._handleFrameSlider = this._handleFrameSlider.bind(this);
         this._handlePreviousButton = this._handlePreviousButton.bind(this);
@@ -48,31 +46,22 @@ class TemporalLoadDialog extends AbstractDialog {
     }
 
     _handleRenderType() {
-        var renderTypeLabel = this._binds.renderType.getValue();
-        if (renderTypeLabel == "timeValue") {
-            this._handleTimeLabelSpinner();
+        if (this._binds.renderType.getValue() == "timeValue") {
+            this._binds.timeErrorLabel.setLabelValue("Milliseconds:");
+            this._binds.timeErrorSpinner.setValue(500);
+            this._binds.timeErrorSpinner.setMinValue(500);
+            this._binds.timeErrorSpinner.setMaxValue(5000);
+            this._binds.timeErrorSpinner.setStepValue(1000);
+            document.time_error_spinner = 500;
         }
-        else if (renderTypeLabel == "errorValue") {
-            this._handleErrorLabelSpinner();
+        else if (this._binds.renderType.getValue() == "errorValue") {
+            this._binds.timeErrorLabel.setLabelValue("Threshold:");
+            this._binds.timeErrorSpinner.setValue(0.2);
+            this._binds.timeErrorSpinner.setMinValue(0);
+            this._binds.timeErrorSpinner.setMaxValue(3);
+            this._binds.timeErrorSpinner.setStepValue(0.1);
+            document.time_error_spinner = 0.2;
         }
-    }
-
-    _handleTimeLabelSpinner() {
-        this._binds.timeErrorLabel.setLabelValue("Milliseconds:");
-        this._binds.timeErrorSpinner.setValue(500);
-        this._binds.timeErrorSpinner.setMinValue(500);
-        this._binds.timeErrorSpinner.setMaxValue(5000);
-        this._binds.timeErrorSpinner.setStepValue(1000);
-        document.time_error_spinner = 500;
-    }
-
-    _handleErrorLabelSpinner() {
-        this._binds.timeErrorLabel.setLabelValue("Threshold:");
-        this._binds.timeErrorSpinner.setValue(0.2);
-        this._binds.timeErrorSpinner.setMinValue(0);
-        this._binds.timeErrorSpinner.setMaxValue(3);
-        this._binds.timeErrorSpinner.setStepValue(0.1);
-        document.time_error_spinner = 0.2;
     }
 
     _handleFrameSpinner() {
@@ -85,14 +74,28 @@ class TemporalLoadDialog extends AbstractDialog {
 
     _handlePlayButton() {
         if(document.file_detail) {
-            if(document.is_playing) {
-                this._binds.playButton.setLabelValue("Play");
-                document.is_playing = false;
-            }
-            else{
+            if(document.is_playing == false) {
+                // go pustame
                 this._binds.playButton.setLabelValue("Stop");
                 document.is_playing = true;
+                if (this._binds.renderType.getValue() == "timeValue") {
+                    
+                }
+                else {
+
+                }
             }
+            else {
+                // go stopirame 
+                this._binds.playButton.setLabelValue("Play");
+                document.is_playing = false;
+                if (this._binds.renderType.getValue() == "timeValue") {
+                    
+                }
+                else {
+                    
+                }
+            } 
         }
     }
 
