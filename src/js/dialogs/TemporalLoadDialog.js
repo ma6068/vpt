@@ -51,6 +51,9 @@ class TemporalLoadDialog extends AbstractDialog {
 
     _handleRenderType() {
         document.time_or_error = this._binds.renderType.getValue();
+        document.is_playing = false;
+        this._binds.playButton.setLabelValue('Play');
+        window.clearInterval(document.time_error_interval);
         if (document.time_or_error == 'timeValue') {
             this._binds.timeErrorLabel.setLabelValue('Milliseconds:');
             this._binds.timeErrorSpinner.setValue(500);
