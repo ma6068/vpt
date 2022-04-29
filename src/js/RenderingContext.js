@@ -12,6 +12,10 @@
 class RenderingContext {
 
 constructor(options) {
+    this.previous_rgb = null;
+    this.now_rgb = null;
+    this.number_of_frames = 0; 
+
     this._render = this._render.bind(this);
     this._webglcontextlostHandler = this._webglcontextlostHandler.bind(this);
     this._webglcontextrestoredHandler = this._webglcontextrestoredHandler.bind(this);
@@ -122,6 +126,23 @@ async setVolume(reader) {
         this._renderer.setVolume(this._volume);
         this.startRendering();
     }
+}
+
+async setVolumeTemporal(reader, modality) {
+    this._volume = new Volume(this._gl, reader);
+    await this._volume.readMetadata({
+        onData: () => {
+            await this._volume.readModality(modality, {
+                onLoad: () => {
+                    this._volume.setFilter(this._filter);
+                    if (this._renderer) {
+                        this._renderer.setVolume(this._volume);
+                        this.startRendering();
+                    }
+                } 
+            });
+        }
+    });
 }
 
 setEnvironmentMap(image) {
@@ -241,6 +262,38 @@ _render() {
     gl.disableVertexAttribArray(aPosition);
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     gl.bindTexture(gl.TEXTURE_2D, null);
+
+    if (document.time_or_error == 'errorValue') {
+        console.log('Error value now: ', document.current_error);
+        document.current_error = 100;
+        var nowTime = performance.now();
+        var arrPixel = new Uint8Array(this._canvas.width * this._canvas.height * 4);
+        gl.readPixels(0, 0, this._canvas.width, this._canvas.height, gl.RGBA, gl.UNSIGNED_BYTE, arrPixel);
+        this.previous_rgb = this.now_rgb;
+        this.now_rgb = new Uint8Array(arrPixel.length / 4);
+        var index1 = 0;  // now_rgb
+        var index2 = 0;  // arrPixel
+        while (index1 < this.now_rgb.length) {
+            var r = arrPixel[index2];
+            var g = arrPixel[index2 + 1];
+            var b = arrPixel[index2 + 2];
+            index2 += 4;
+            this.now_rgb[index1] = (r + g + b) / 3;
+            index1 += 1;
+        }
+        this.number_of_frames += 1;
+        if (this.number_of_frames < 10) {
+            if (this.previous_rgb !== null) {
+                var suma = 0;
+                for (var i=0; i<this.previous_rgb.length; i++) {
+                    suma += Math.pow(this.previous_rgb[i] - this.now_rgb[i], 2);
+                }
+                document.current_error = Math.sqrt(suma / this.previous_rgb.length);
+                var calculation_time = performance.now() - nowTime;
+                console.log('Error calculated in [ms] : ', calculation_time);
+            }
+        }
+    }
 }
 
 getScale() {
