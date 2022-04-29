@@ -47,6 +47,7 @@ async readModality(modalityName) {
     }
 
     this.ready = false;
+    document.max_frames = this.modalities.length;
     const modality = this.modalities.find(modality => modality.name === modalityName);
     if (!modality) {
         throw new Error('Modality does not exist');
@@ -88,6 +89,7 @@ async readModality(modalityName) {
 }
 
 _typize(data, type) {
+    console.log(type);
     const gl = this._gl;
     switch (type) {
         case gl.BYTE:                         return new Int8Array(data);
@@ -106,7 +108,7 @@ _typize(data, type) {
         case gl.UNSIGNED_INT_24_8:            return new Uint32Array(data);
         case gl.HALF_FLOAT:                   return new Uint16Array(data);
         case gl.FLOAT:                        return new Float32Array(data);
-        default: throw new Error('Unknown volume datatype: ' + type);
+        default: return new Uint8Array(data);
     }
 }
 

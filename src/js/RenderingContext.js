@@ -117,32 +117,15 @@ resize(width, height) {
     this._camera.resize(width, height);
 }
 
-async setVolume(reader) {
+async setVolume(reader, modality) {
     this._volume = new Volume(this._gl, reader);
     await this._volume.readMetadata();
-    await this._volume.readModality('default');
+    await this._volume.readModality(modality);
     this._volume.setFilter(this._filter);
     if (this._renderer) {
         this._renderer.setVolume(this._volume);
         this.startRendering();
     }
-}
-
-async setVolumeTemporal(reader, modality) {
-    this._volume = new Volume(this._gl, reader);
-    await this._volume.readMetadata({
-        onData: () => {
-            await this._volume.readModality(modality, {
-                onLoad: () => {
-                    this._volume.setFilter(this._filter);
-                    if (this._renderer) {
-                        this._renderer.setVolume(this._volume);
-                        this.startRendering();
-                    }
-                } 
-            });
-        }
-    });
 }
 
 setEnvironmentMap(image) {

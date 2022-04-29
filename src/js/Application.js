@@ -136,7 +136,7 @@ _handleVolumeLoad(e) {
                 bits   : options.precision
             });
             this._renderingContext.stopRendering();
-            this._renderingContext.setVolume(reader);
+            this._renderingContext.setVolume(reader, 'default');
         }
     } else if (options.type === 'url') {
         const readerClass = this._getReaderForFileType(options.filetype);
@@ -144,7 +144,7 @@ _handleVolumeLoad(e) {
             const loader = new AjaxLoader(options.url);
             const reader = new readerClass(loader);
             this._renderingContext.stopRendering();
-            this._renderingContext.setVolume(reader);
+            this._renderingContext.setVolume(reader, 'default');
         }
     }
 }
@@ -162,7 +162,7 @@ _handleTemporalLoad(e) {
                 bits   : options.precision
             });
             this._renderingContext.stopRendering();
-            this._renderingContext.setVolume(reader);
+            this._renderingContext.setVolume(reader, String(document.current_frame));
         }
     } else if (options.type === 'url') {
         const readerClass = this._getReaderForFileType(options.filetype);
@@ -170,7 +170,7 @@ _handleTemporalLoad(e) {
             const loader = new AjaxLoader(options.url);
             const reader = new readerClass(loader);
             this._renderingContext.stopRendering();
-            this._renderingContext.setVolume(reader);
+            this._renderingContext.setVolume(reader, String(document.current_frame));
         }
     }
 }
