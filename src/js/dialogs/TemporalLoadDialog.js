@@ -126,7 +126,6 @@ class TemporalLoadDialog extends AbstractDialog {
 
     _handlePlayButton() {
         if(document.file_detail) {
-
             if(document.is_playing == false) {
                 // go pustame
                 this._binds.playButton.setLabelValue('Stop');
@@ -185,6 +184,7 @@ class TemporalLoadDialog extends AbstractDialog {
         }
     }
 
+    // ova se povikuva koga ke ima promeni vo vrednosta (milisekundi / greska)
     _handleTimeErrorSpinner() {
         document.time_error_spinner = this._binds.timeErrorSpinner.getValue();
         if (document.is_playing) {
