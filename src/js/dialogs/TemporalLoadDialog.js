@@ -120,6 +120,8 @@ class TemporalLoadDialog extends AbstractDialog {
 
     _errorCheck() {
         // ako dovolno dobro renderirame odime na nareden raw
+        console.log('Vo label sto ima: ' + document.time_error_spinner);
+        console.log('Vrednost vo TemporalLoad: ' + document.current_error);
         if (document.time_error_spinner > document.current_error) {
             console.log('Error now:' + document.current_error);
             this._updateCurrentVolume();
@@ -136,7 +138,7 @@ class TemporalLoadDialog extends AbstractDialog {
                     document.time_error_interval = window.setInterval(this._updateCurrentVolume, document.time_error_spinner);
                 }
                 else {
-                    document.time_error_interval = window.setInterval(this._errorCheck, 100)
+                    document.time_error_interval = window.setInterval(this._errorCheck, 3)
                 }
             }
             else {
@@ -195,7 +197,7 @@ class TemporalLoadDialog extends AbstractDialog {
                 document.time_error_interval = window.setInterval(this._updateCurrentVolume, document.time_error_spinner);
             }
             else {
-                document.time_error_interval = window.setInterval(this._errorCheck, 100);
+                document.time_error_interval = window.setInterval(this._errorCheck, 3);
             }
         }
     }

@@ -247,8 +247,7 @@ _render() {
     gl.bindTexture(gl.TEXTURE_2D, null);
 
     if (document.time_or_error == 'errorValue' && document.is_playing == true) {
-        document.current_error = 100;
-        var nowTime = performance.now();
+        document.current_error = 3;   // max error value 
         var arrPixel = new Uint8Array(this._canvas.width * this._canvas.height * 4);
         gl.readPixels(0, 0, this._canvas.width, this._canvas.height, gl.RGBA, gl.UNSIGNED_BYTE, arrPixel);
         this.previous_rgb = this.now_rgb;
@@ -271,8 +270,7 @@ _render() {
                     suma += Math.pow(this.previous_rgb[i] - this.now_rgb[i], 2);
                 }
                 document.current_error = Math.sqrt(suma / this.previous_rgb.length);
-                var calculation_time = performance.now() - nowTime;
-                console.log('Error calculated in [ms] : ', calculation_time);
+                console.log('vo RenderContext presmetano: ' + document.current_error);
             }
         }
     }
