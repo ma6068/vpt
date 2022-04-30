@@ -70,8 +70,15 @@ async readModality(modalityName) {
     gl.texParameteri(gl.TEXTURE_3D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_3D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
+    if (modality.internalFormat == undefined) {
+        modality.internalFormat = gl.R8;
+        modality.format = gl.RED;
+        modality.type = gl.UNSIGNED_BYTE
+    }
+
     gl.texStorage3D(gl.TEXTURE_3D, 1, modality.internalFormat,
         dimensions.width, dimensions.height, dimensions.depth);
+
 
     for (const placement of modality.placements) {
         const data = await this._reader.readBlock(placement.index);
@@ -89,7 +96,6 @@ async readModality(modalityName) {
 }
 
 _typize(data, type) {
-    console.log(type);
     const gl = this._gl;
     switch (type) {
         case gl.BYTE:                         return new Int8Array(data);
