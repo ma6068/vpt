@@ -50,6 +50,7 @@ class TemporalLoadDialog extends AbstractDialog {
         // Dodadeno kraj
     }
 
+    // ova se povikuva koga se menuva po sto da renderirame time ili error
     _handleRenderType() {
         document.time_or_error = this._binds.renderType.getValue();
         document.is_playing = false;
@@ -57,20 +58,21 @@ class TemporalLoadDialog extends AbstractDialog {
         window.clearInterval(document.time_error_interval);
         if (document.time_or_error == 'timeValue') {
             this._binds.timeErrorLabel.setLabelValue('Milliseconds:');
-            this._binds.timeErrorSpinner.setValue(500);
             this._binds.timeErrorSpinner.setMinValue(500);
             this._binds.timeErrorSpinner.setMaxValue(5000);
-            this._binds.timeErrorSpinner.setStepValue(1000);
+            this._binds.timeErrorSpinner.setStepValue(500);
+            this._binds.timeErrorSpinner.setValue(500);
             document.time_error_spinner = 500;
         }
         else {
             this._binds.timeErrorLabel.setLabelValue('Threshold:');
-            this._binds.timeErrorSpinner.setValue(0.2);
             this._binds.timeErrorSpinner.setMinValue(0);
             this._binds.timeErrorSpinner.setMaxValue(3);
             this._binds.timeErrorSpinner.setStepValue(0.1);
+            this._binds.timeErrorSpinner.setValue(0.2);
             document.time_error_spinner = 0.2;
         }
+        console.log(document.time_error_spinner);
     }
 
     _handleFrameSpinner() {
