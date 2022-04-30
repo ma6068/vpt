@@ -247,7 +247,6 @@ _render() {
     gl.bindTexture(gl.TEXTURE_2D, null);
 
     if (document.time_or_error == 'errorValue' && document.is_playing == true) {
-        console.log('Error value now: ', document.current_error);
         document.current_error = 100;
         var nowTime = performance.now();
         var arrPixel = new Uint8Array(this._canvas.width * this._canvas.height * 4);

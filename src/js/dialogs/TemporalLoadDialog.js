@@ -17,13 +17,14 @@ class TemporalLoadDialog extends AbstractDialog {
 
         // Dodadeno
         this._handleRenderType = this._handleRenderType.bind(this);
-        this._handleFrameSpinner = this._handleFrameSpinner.bind(this);
-        this._handleFrameSlider = this._handleFrameSlider.bind(this);
         this._handlePreviousButton = this._handlePreviousButton.bind(this);
         this._handlePlayButton = this._handlePlayButton.bind(this);
         this._handleNextButton = this._handleNextButton.bind(this);
+        this._errorCheck = this._errorCheck.bind(this);
         this._updateCurrentVolume = this._updateCurrentVolume.bind(this);
         this._handleTimeErrorSpinner = this._handleTimeErrorSpinner.bind(this);
+        this._handleFrameSpinner = this._handleFrameSpinner.bind(this);
+        this._handleFrameSlider = this._handleFrameSlider.bind(this);
         // Dodadeno kraj
 
         this._demos = [];
@@ -118,7 +119,8 @@ class TemporalLoadDialog extends AbstractDialog {
     }
 
     _errorCheck() {
-        if (document.current_error <= document.time_error_spinner || isNaN(document.current_error)) {
+        // ako dovolno dobro renderirame odime na nareden raw
+        if (document.time_error_spinner > document.current_error) {
             console.log('Error now:' + document.current_error);
             this._updateCurrentVolume();
         }
