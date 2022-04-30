@@ -72,7 +72,6 @@ class TemporalLoadDialog extends AbstractDialog {
             this._binds.timeErrorSpinner.setValue(0.2);
             document.time_error_spinner = 0.2;
         }
-        console.log(document.time_error_spinner);
     }
 
     _handleFrameSpinner() {
@@ -127,6 +126,7 @@ class TemporalLoadDialog extends AbstractDialog {
 
     _handlePlayButton() {
         if(document.file_detail) {
+
             if(document.is_playing == false) {
                 // go pustame
                 this._binds.playButton.setLabelValue('Stop');
@@ -186,7 +186,7 @@ class TemporalLoadDialog extends AbstractDialog {
     }
 
     _handleTimeErrorSpinner() {
-        document.timeErrorSpinner = this._binds.timeErrorSpinner.getValue();
+        document.time_error_spinner = this._binds.timeErrorSpinner.getValue();
         if (document.is_playing) {
             window.clearInterval(document.time_error_interval);
             if (document.time_or_error == 'timeValue') {
