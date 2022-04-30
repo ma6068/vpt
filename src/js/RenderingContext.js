@@ -246,7 +246,7 @@ _render() {
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     gl.bindTexture(gl.TEXTURE_2D, null);
 
-    if (document.time_or_error == 'errorValue') {
+    if (document.time_or_error == 'errorValue' && document.is_playing == true) {
         console.log('Error value now: ', document.current_error);
         document.current_error = 100;
         var nowTime = performance.now();

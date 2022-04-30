@@ -22,8 +22,8 @@ class TemporalLoadDialog extends AbstractDialog {
         this._handlePreviousButton = this._handlePreviousButton.bind(this);
         this._handlePlayButton = this._handlePlayButton.bind(this);
         this._handleNextButton = this._handleNextButton.bind(this);
-        this._handleTimeErrorSpinner = this._handleTimeErrorSpinner.bind(this);
         this._updateCurrentVolume = this._updateCurrentVolume.bind(this);
+        this._handleTimeErrorSpinner = this._handleTimeErrorSpinner.bind(this);
         // Dodadeno kraj
 
         this._demos = [];
