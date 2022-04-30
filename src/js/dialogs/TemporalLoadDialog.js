@@ -22,7 +22,7 @@ class TemporalLoadDialog extends AbstractDialog {
         this._handlePreviousButton = this._handlePreviousButton.bind(this);
         this._handlePlayButton = this._handlePlayButton.bind(this);
         this._handleNextButton = this._handleNextButton.bind(this);
-        this._handle_TimeErrorSpinner = this._handle_TimeErrorSpinner.bind(this);
+        this._handleTimeErrorSpinner = this._handleTimeErrorSpinner.bind(this);
         this._updateCurrentVolume = this._updateCurrentVolume.bind(this);
         // Dodadeno kraj
 
@@ -46,7 +46,7 @@ class TemporalLoadDialog extends AbstractDialog {
         this._binds.nextButton.addEventListener('click', this._handleNextButton);
         this._binds.frameSlider.addEventListener('change', this._handleFrameSlider);
         this._binds.frameSpinner.addEventListener('change', this._handleFrameSpinner);
-        this._binds.timeErrorSpinner.addEventListener('change', this._handle_TimeErrorSpinner);
+        this._binds.timeErrorSpinner.addEventListener('change', this._handleTimeErrorSpinner);
         // Dodadeno kraj
     }
 
@@ -79,7 +79,7 @@ class TemporalLoadDialog extends AbstractDialog {
             this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
             this._binds.frameSpinner.setValue(document.current_frame);
             this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
-            // go spopirame ako e pusteno
+            // go stopirame ako e pusteno
             if (document.is_playing) {
                 this._binds.playButton.setLabelValue("Play");
                 document.is_playing = false;
@@ -95,7 +95,7 @@ class TemporalLoadDialog extends AbstractDialog {
             this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
             this._binds.frameSpinner.setValue(document.current_frame);
             this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
-            // go spopirame ako e pusteno
+            // go stopirame ako e pusteno
             if (document.is_playing) {
                 this._binds.playButton.setLabelValue('Play');
                 document.is_playing = false;
@@ -147,7 +147,7 @@ class TemporalLoadDialog extends AbstractDialog {
 
     _handlePreviousButton() {
         if (document.file_detail) {
-            // go spopirame ako e pusteno
+            // go stopirame ako e pusteno
             if (document.is_playing) {
                 this._binds.playButton.setLabelValue('Play');
                 document.is_playing = false;
@@ -166,7 +166,7 @@ class TemporalLoadDialog extends AbstractDialog {
 
     _handleNextButton() {
         if (document.file_detail) {
-            // go spopirame ako e pusteno
+            // go stopirame ako e pusteno
             if (document.is_playing) {
                 this._binds.playButton.setLabelValue('Play');
                 document.is_playing = false;
@@ -183,7 +183,7 @@ class TemporalLoadDialog extends AbstractDialog {
         }
     }
 
-    _handle_TimeErrorSpinner() {
+    _handleTimeErrorSpinner() {
         document.timeErrorSpinner = this._binds.timeErrorSpinner.getValue();
         if (document.is_playing) {
             window.clearInterval(document.time_error_interval);
