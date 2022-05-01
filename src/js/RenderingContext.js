@@ -264,14 +264,15 @@ _render() {
         }
         this.number_of_frames += 1;
         if (this.number_of_frames < 10) {
-            if (this.previous_rgb !== null) {
-                var suma = 0;
-                for (var i=0; i<this.previous_rgb.length; i++) {
-                    suma += Math.pow(this.previous_rgb[i] - this.now_rgb[i], 2);
-                }
-                document.current_error = Math.sqrt(suma / this.previous_rgb.length);
-                console.log('vo RenderContext presmetano: ' + document.current_error);
+            return;
+        }
+        if (this.previous_rgb !== null) {
+            var suma = 0;
+            for (var i=0; i<this.previous_rgb.length; i++) {
+                suma += Math.pow(this.previous_rgb[i] - this.now_rgb[i], 2);
             }
+            document.current_error = Math.sqrt(suma / this.previous_rgb.length);
+            console.log('Sega se 10 i presmetav: ' + document.current_error);
         }
     }
 }

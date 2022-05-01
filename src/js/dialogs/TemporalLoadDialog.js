@@ -89,6 +89,9 @@ class TemporalLoadDialog extends AbstractDialog {
             }
             this.dispatchEvent(new CustomEvent('load', document.file_detail));
         }
+        else {
+            return;
+        }
     }
 
     _handleFrameSlider() {
@@ -105,6 +108,9 @@ class TemporalLoadDialog extends AbstractDialog {
             }
             this.dispatchEvent(new CustomEvent('load', document.file_detail));
         }
+        else {
+            return;
+        }
     }
 
     _updateCurrentVolume() {
@@ -120,10 +126,9 @@ class TemporalLoadDialog extends AbstractDialog {
 
     _errorCheck() {
         // ako dovolno dobro renderirame odime na nareden raw
-        console.log('Vo label sto ima: ' + document.time_error_spinner);
         console.log('Vrednost vo TemporalLoad: ' + document.current_error);
         if (document.time_error_spinner > document.current_error) {
-            console.log('Error now:' + document.current_error);
+            console.log('Updejtiram volume');
             this._updateCurrentVolume();
         }
     }
@@ -148,6 +153,9 @@ class TemporalLoadDialog extends AbstractDialog {
                 window.clearInterval(document.time_error_interval);
             } 
         }
+        else {
+            return;
+        }
     }
 
     _handlePreviousButton() {
@@ -167,6 +175,9 @@ class TemporalLoadDialog extends AbstractDialog {
                 this.dispatchEvent(new CustomEvent('load', document.file_detail));
             }
         }
+        else {
+            return;
+        }
     }
 
     _handleNextButton() {
@@ -185,6 +196,9 @@ class TemporalLoadDialog extends AbstractDialog {
                 this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
                 this.dispatchEvent(new CustomEvent('load', document.file_detail));
             }
+        }
+        else {
+            return;
         }
     }
 
