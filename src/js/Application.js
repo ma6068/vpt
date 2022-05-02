@@ -162,7 +162,7 @@ _handleTemporalLoad(e) {
                 bits   : options.precision
             });
             this._renderingContext.stopRendering();
-            this._renderingContext.setVolume(reader, String(document.current_frame));
+            this._renderingContext.setVolume(reader, String(document.current_input));
         }
     } else if (options.type === 'url') {
         const readerClass = this._getReaderForFileType(options.filetype);
@@ -170,7 +170,7 @@ _handleTemporalLoad(e) {
             const loader = new AjaxLoader(options.url);
             const reader = new readerClass(loader);
             this._renderingContext.stopRendering();
-            this._renderingContext.setVolume(reader, String(document.current_frame));
+            this._renderingContext.setVolume(reader, String(document.current_input));
         }
     }
 }

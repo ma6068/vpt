@@ -195,11 +195,11 @@
         },
         {
           "type": "field",
-          "label": "Frame",
+          "label": "Input data:",
           "children": [
             {
               "type": "spinner",
-              "bind": "frameSpinner",
+              "bind": "dataSpinner",
               "value": 0,
               "min": 0,
               "max": 0
@@ -208,7 +208,7 @@
         },
         {
           "type": "slider",
-          "bind": "frameSlider",
+          "bind": "dataSlider",
           "value": 0,
           "min": 0,
           "max": 1,

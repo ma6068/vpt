@@ -47,7 +47,7 @@ async readModality(modalityName) {
     }
 
     this.ready = false;
-    document.max_frames = this.modalities.length;
+    document.max_input_data = this.modalities.length;
     const modality = this.modalities.find(modality => modality.name === modalityName);
     if (!modality) {
         throw new Error('Modality does not exist');

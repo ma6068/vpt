@@ -21,10 +21,10 @@ class TemporalLoadDialog extends AbstractDialog {
         this._handlePlayButton = this._handlePlayButton.bind(this);
         this._handleNextButton = this._handleNextButton.bind(this);
         this._errorCheck = this._errorCheck.bind(this);
-        this._updateCurrentVolume = this._updateCurrentVolume.bind(this);
+        this._loadNextData = this._loadNextData.bind(this);
         this._handleTimeErrorSpinner = this._handleTimeErrorSpinner.bind(this);
-        this._handleFrameSpinner = this._handleFrameSpinner.bind(this);
-        this._handleFrameSlider = this._handleFrameSlider.bind(this);
+        this._handleDataSpinner = this._handleDataSpinner.bind(this);
+        this._handleDataSlider = this._handleDataSlider.bind(this);
         // Dodadeno kraj
 
         this._demos = [];
@@ -45,8 +45,8 @@ class TemporalLoadDialog extends AbstractDialog {
         this._binds.previousButton.addEventListener('click', this._handlePreviousButton);
         this._binds.playButton.addEventListener('click', this._handlePlayButton);
         this._binds.nextButton.addEventListener('click', this._handleNextButton);
-        this._binds.frameSlider.addEventListener('change', this._handleFrameSlider);
-        this._binds.frameSpinner.addEventListener('change', this._handleFrameSpinner);
+        this._binds.dataSlider.addEventListener('change', this._handleDataSlider);
+        this._binds.dataSpinner.addEventListener('change', this._handleDataSpinner);
         this._binds.timeErrorSpinner.addEventListener('change', this._handleTimeErrorSpinner);
         // Dodadeno kraj
     }
@@ -75,12 +75,13 @@ class TemporalLoadDialog extends AbstractDialog {
         }
     }
 
-    _handleFrameSpinner() {
+    // se povikuva pri promena na vrednosta vo poleto raw
+    _handleDataSpinner() {
         if (document.file_detail) {
-            document.current_frame = this._binds.frameSpinner.getValue();
-            this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
-            this._binds.frameSpinner.setValue(document.current_frame);
-            this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
+            document.current_input = this._binds.dataSpinner.getValue();
+            this._binds.dataSpinner.setMaxValue(document.max_input_data  - 1);
+            this._binds.dataSpinner.setValue(document.current_input);
+            this._binds.dataSlider.setValueAndUpdateMax(document.current_input, document.max_input_data - 1);
             // go stopirame ako e pusteno
             if (document.is_playing) {
                 this._binds.playButton.setLabelValue("Play");
@@ -89,17 +90,15 @@ class TemporalLoadDialog extends AbstractDialog {
             }
             this.dispatchEvent(new CustomEvent('load', document.file_detail));
         }
-        else {
-            return;
-        }
     }
 
-    _handleFrameSlider() {
+    // se povikuva pri promena na vrednosta vo slajderot (linijata)
+    _handleDataSlider() {
         if (document.file_detail) {
-            document.current_frame = Math.floor(this._binds.frameSlider.getValue())
-            this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
-            this._binds.frameSpinner.setValue(document.current_frame);
-            this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
+            document.current_input = Math.floor(this._binds.dataSlider.getValue())
+            this._binds.dataSpinner.setMaxValue(document.max_input_data  - 1);
+            this._binds.dataSpinner.setValue(document.current_input);
+            this._binds.dataSlider.setValueAndUpdateMax(document.current_input, document.max_input_data - 1);
             // go stopirame ako e pusteno
             if (document.is_playing) {
                 this._binds.playButton.setLabelValue('Play');
@@ -108,19 +107,16 @@ class TemporalLoadDialog extends AbstractDialog {
             }
             this.dispatchEvent(new CustomEvent('load', document.file_detail));
         }
-        else {
-            return;
-        }
     }
 
-    _updateCurrentVolume() {
-        document.current_frame += 1;
-        if (document.current_frame == document.max_frames) {
-            document.current_frame = 0;
+    _loadNextData() {
+        document.current_input += 1;
+        if (document.current_input == document.max_input_data) {
+            document.current_input = 0;
         }
-        this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
-        this._binds.frameSpinner.setValue(document.current_frame);
-        this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
+        this._binds.dataSpinner.setMaxValue(document.max_input_data - 1);
+        this._binds.dataSpinner.setValue(document.current_input);
+        this._binds.dataSlider.setValueAndUpdateMax(document.current_input, document.max_input_data - 1);
         this.dispatchEvent(new CustomEvent('load', document.file_detail));
     }
 
@@ -129,7 +125,7 @@ class TemporalLoadDialog extends AbstractDialog {
         console.log('Vrednost vo TemporalLoad: ' + document.current_error);
         if (document.time_error_spinner > document.current_error) {
             console.log('Updejtiram volume');
-            this._updateCurrentVolume();
+            this._loadNextData();
         }
     }
 
@@ -140,7 +136,7 @@ class TemporalLoadDialog extends AbstractDialog {
                 this._binds.playButton.setLabelValue('Stop');
                 document.is_playing = true;
                 if (document.time_or_error == 'timeValue') {
-                    document.time_error_interval = window.setInterval(this._updateCurrentVolume, document.time_error_spinner);
+                    document.time_error_interval = window.setInterval(this._loadNextData, document.time_error_spinner);
                 }
                 else {
                     document.time_error_interval = window.setInterval(this._errorCheck, 100)
@@ -153,9 +149,6 @@ class TemporalLoadDialog extends AbstractDialog {
                 window.clearInterval(document.time_error_interval);
             } 
         }
-        else {
-            return;
-        }
     }
 
     _handlePreviousButton() {
@@ -166,17 +159,14 @@ class TemporalLoadDialog extends AbstractDialog {
                 document.is_playing = false;
                 window.clearInterval(document.time_error_interval);           
             }
-            // go vrakame nazad za 1 frame
-            if (document.current_frame > 0) {
-                document.current_frame -= 1;
-                this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
-                this._binds.frameSpinner.setValue(document.current_frame);
-                this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
+            // go vrakame nazad za 1 input
+            if (document.current_input > 0) {
+                document.current_input -= 1;
+                this._binds.dataSpinner.setMaxValue(document.max_input_data - 1);
+                this._binds.dataSpinner.setValue(document.current_input);
+                this._binds.dataSlider.setValueAndUpdateMax(document.current_input, document.max_input_data - 1);
                 this.dispatchEvent(new CustomEvent('load', document.file_detail));
             }
-        }
-        else {
-            return;
         }
     }
 
@@ -188,17 +178,14 @@ class TemporalLoadDialog extends AbstractDialog {
                 document.is_playing = false;
                 window.clearInterval(document.time_error_interval);           
             }
-            // go noseme napred za 1 frame
-            if (document.current_frame + 1 < document.max_frames) {
-                document.current_frame += 1;
-                this._binds.frameSpinner.setMaxValue(document.max_frames - 1);
-                this._binds.frameSpinner.setValue(document.current_frame);
-                this._binds.frameSlider.setValueAndUpdateMax(document.current_frame, document.max_frames - 1);
+            // go noseme napred za 1 input
+            if (document.current_input + 1 < document.max_input_data) {
+                document.current_input += 1;
+                this._binds.dataSpinner.setMaxValue(document.max_input_data - 1);
+                this._binds.dataSpinner.setValue(document.current_input);
+                this._binds.dataSlider.setValueAndUpdateMax(document.current_input, document.max_input_data - 1);
                 this.dispatchEvent(new CustomEvent('load', document.file_detail));
             }
-        }
-        else {
-            return;
         }
     }
 
@@ -208,7 +195,7 @@ class TemporalLoadDialog extends AbstractDialog {
         if (document.is_playing) {
             window.clearInterval(document.time_error_interval);
             if (document.time_or_error == 'timeValue') {
-                document.time_error_interval = window.setInterval(this._updateCurrentVolume, document.time_error_spinner);
+                document.time_error_interval = window.setInterval(this._loadNextData, document.time_error_spinner);
             }
             else {
                 document.time_error_interval = window.setInterval(this._errorCheck, 100);
