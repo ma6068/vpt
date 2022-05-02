@@ -40,7 +40,7 @@ setValue(value) {
 }
 
 setValueAndUpdateMax(value, newMax) {
-    this.value = Math.min(Math.max(value, this.min), this.max);
+    this.value = Math.min(Math.max(value, this.min), document.max_input_data);
     this.max = newMax;
     this._updateUI();
 }

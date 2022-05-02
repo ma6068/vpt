@@ -162,11 +162,14 @@ class TemporalLoadDialog extends AbstractDialog {
             // go vrakame nazad za 1 input
             if (document.current_input > 0) {
                 document.current_input -= 1;
-                this._binds.dataSpinner.setMaxValue(document.max_input_data - 1);
-                this._binds.dataSpinner.setValue(document.current_input);
-                this._binds.dataSlider.setValueAndUpdateMax(document.current_input, document.max_input_data - 1);
-                this.dispatchEvent(new CustomEvent('load', document.file_detail));
             }
+            else {
+                document.current_input = document.max_input_data - 1;
+            }
+            this._binds.dataSpinner.setMaxValue(document.max_input_data - 1);
+            this._binds.dataSpinner.setValue(document.current_input);
+            this._binds.dataSlider.setValueAndUpdateMax(document.current_input, document.max_input_data - 1);
+            this.dispatchEvent(new CustomEvent('load', document.file_detail));
         }
     }
 
@@ -181,11 +184,14 @@ class TemporalLoadDialog extends AbstractDialog {
             // go noseme napred za 1 input
             if (document.current_input + 1 < document.max_input_data) {
                 document.current_input += 1;
-                this._binds.dataSpinner.setMaxValue(document.max_input_data - 1);
-                this._binds.dataSpinner.setValue(document.current_input);
-                this._binds.dataSlider.setValueAndUpdateMax(document.current_input, document.max_input_data - 1);
-                this.dispatchEvent(new CustomEvent('load', document.file_detail));
             }
+            else {
+                document.current_input = 0;
+            }
+            this._binds.dataSpinner.setMaxValue(document.max_input_data - 1);
+            this._binds.dataSpinner.setValue(document.current_input);
+            this._binds.dataSlider.setValueAndUpdateMax(document.current_input, document.max_input_data - 1);
+            this.dispatchEvent(new CustomEvent('load', document.file_detail));
         }
     }
 
