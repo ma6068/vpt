@@ -143,7 +143,7 @@ class TemporalLoadDialog extends AbstractDialog {
                     document.time_error_interval = window.setInterval(this._updateCurrentVolume, document.time_error_spinner);
                 }
                 else {
-                    document.time_error_interval = window.setInterval(this._errorCheck, 3)
+                    document.time_error_interval = window.setInterval(this._errorCheck, 100)
                 }
             }
             else {
@@ -211,7 +211,7 @@ class TemporalLoadDialog extends AbstractDialog {
                 document.time_error_interval = window.setInterval(this._updateCurrentVolume, document.time_error_spinner);
             }
             else {
-                document.time_error_interval = window.setInterval(this._errorCheck, 3);
+                document.time_error_interval = window.setInterval(this._errorCheck, 100);
             }
         }
     }

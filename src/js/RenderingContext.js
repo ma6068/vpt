@@ -254,7 +254,7 @@ _render() {
         this.now_rgb = new Uint8Array(arrPixel.length / 4);
         var index1 = 0;  // now_rgb
         var index2 = 0;  // arrPixel
-        while (index1 < this.now_rgb.length) {
+        while (index2 < arrPixel.length) {
             var r = arrPixel[index2];
             var g = arrPixel[index2 + 1];
             var b = arrPixel[index2 + 2];
