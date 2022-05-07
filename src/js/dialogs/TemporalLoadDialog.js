@@ -117,7 +117,10 @@ class TemporalLoadDialog extends AbstractDialog {
         this._binds.dataSpinner.setMaxValue(document.max_input_data - 1);
         this._binds.dataSpinner.setValue(document.current_input);
         this._binds.dataSlider.setValueAndUpdateMax(document.current_input, document.max_input_data - 1);
+        var realTime = performance.now() - document.real_time;
+        console.log("Real time: " + realTime);
         this.dispatchEvent(new CustomEvent('load', document.file_detail));
+        document.real_time = performance.now();
     }
 
     _errorCheck() {
