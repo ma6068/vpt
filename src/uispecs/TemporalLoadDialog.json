@@ -217,7 +217,7 @@
         {
           "type": "button",
           "bind": "previousButton",
-          "label": "Previous"
+          "label": "Previous frame"
         },
         {
           "type": "button",
@@ -227,7 +227,7 @@
         {
           "type": "button",
           "bind": "nextButton",
-          "label": "Next"
+          "label": "Next frame"
         }
       ]
     }
