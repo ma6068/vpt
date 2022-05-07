@@ -195,7 +195,7 @@
         },
         {
           "type": "field",
-          "label": "Input data:",
+          "label": "Frame:",
           "children": [
             {
               "type": "spinner",
