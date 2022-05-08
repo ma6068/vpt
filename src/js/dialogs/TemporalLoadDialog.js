@@ -60,7 +60,7 @@ class TemporalLoadDialog extends AbstractDialog {
         if (document.time_or_error == 'timeValue') {
             this._binds.timeErrorLabel.setLabelValue('Milliseconds:');
             this._binds.timeErrorSpinner.setMinValue(500);
-            this._binds.timeErrorSpinner.setMaxValue(5000);
+            this._binds.timeErrorSpinner.setMaxValue(30000);
             this._binds.timeErrorSpinner.setStepValue(500);
             this._binds.timeErrorSpinner.setValue(500);
             document.time_error_spinner = 500;
