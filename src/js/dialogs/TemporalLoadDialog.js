@@ -125,9 +125,8 @@ class TemporalLoadDialog extends AbstractDialog {
 
     _errorCheck() {
         // ako dovolno dobro renderirame odime na nareden raw
-        console.log('Vrednost vo TemporalLoad: ' + document.current_error);
         if (document.time_error_spinner > document.current_error) {
-            console.log('Updejtiram volume');
+            console.log('Next volume');
             this._loadNextData();
         }
     }

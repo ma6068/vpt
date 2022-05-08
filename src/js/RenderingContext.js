@@ -272,7 +272,7 @@ _render() {
                 suma += Math.pow(this.previous_rgb[i] - this.now_rgb[i], 2);
             }
             document.current_error = Math.sqrt(suma / this.previous_rgb.length);
-            console.log('Sega se 10 i presmetav: ' + document.current_error);
+            console.log('Current error is: ' + document.current_error);
         }
     }
 }
