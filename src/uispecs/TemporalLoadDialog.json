@@ -188,7 +188,7 @@
               "bind": "timeErrorSpinner",
               "value": "500",
               "min": "500",
-              "max": "5000",
+              "max": "30000",
               "step": "500"
             }
           ]
