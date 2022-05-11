@@ -16,7 +16,8 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/terier/vpt#readme",
   "dependencies": {
-    "express": "latest"
+    "express": "latest",
+    "ffmpeg": "0.0.4"
   },
   "engines": {
     "node": "12.x"

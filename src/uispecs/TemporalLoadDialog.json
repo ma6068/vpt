@@ -228,6 +228,11 @@
           "type": "button",
           "bind": "nextButton",
           "label": "Next frame"
+        },
+        {
+          "type": "button",
+          "bind": "createVideo",
+          "label": "Create a video"
         }
       ]
     }

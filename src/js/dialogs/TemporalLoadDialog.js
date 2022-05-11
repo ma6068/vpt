@@ -25,6 +25,8 @@ class TemporalLoadDialog extends AbstractDialog {
         this._handleTimeErrorSpinner = this._handleTimeErrorSpinner.bind(this);
         this._handleDataSpinner = this._handleDataSpinner.bind(this);
         this._handleDataSlider = this._handleDataSlider.bind(this);
+
+        this._handleCreateVideo = this._handleCreateVideo.bind(this);
         // Dodadeno kraj
 
         this._demos = [];
@@ -48,6 +50,8 @@ class TemporalLoadDialog extends AbstractDialog {
         this._binds.dataSlider.addEventListener('change', this._handleDataSlider);
         this._binds.dataSpinner.addEventListener('change', this._handleDataSpinner);
         this._binds.timeErrorSpinner.addEventListener('change', this._handleTimeErrorSpinner);
+
+        this._binds.createVideo.addEventListener('click', this._handleCreateVideo);
         // Dodadeno kraj
     }
 
@@ -112,6 +116,7 @@ class TemporalLoadDialog extends AbstractDialog {
     _loadNextData() {
         var canvas = document.getElementsByClassName("renderer");
         var image = canvas[0].toDataURL("image/png", 1.0);
+        document.temporal_images.push(image);
         document.current_input += 1;
         if (document.current_input == document.max_input_data) {
             document.current_input = 0;
@@ -152,6 +157,20 @@ class TemporalLoadDialog extends AbstractDialog {
                 document.is_playing = false;
                 window.clearInterval(document.time_error_interval);
             } 
+        }
+    }
+
+    _handleCreateVideo() {
+        if (document.file_detail) {
+            // go stopirame ako e pusteno
+            if (document.is_playing) {
+                this._binds.playButton.setLabelValue('Play');
+                document.is_playing = false;
+                window.clearInterval(document.time_error_interval);           
+            }
+            console.log("kliknat sum!");
+            
+            document.temporal_images = [];  // na kraj ja cisteme tabelata so sliki
         }
     }
 
