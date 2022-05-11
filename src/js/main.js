@@ -46,6 +46,7 @@ document.max_input_data  = 1;
 document.current_error = 3;  // set to max value
 document.time_or_error = 'timeValue';   // mozni vrednosti: timeValue / errorValue
 document.temporal_images = [];
+document.temporal_image_index = 0;
 
 document.addEventListener('DOMContentLoaded', async () => {
     const rl = ResourceLoader.instance;
