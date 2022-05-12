@@ -11,3 +11,39 @@ app.use('/', express.static('build'))
 app.listen(app.get('port'), function () {
     console.log('Listening on port ' + app.get('port'));
 });
+
+app.get('/createVideo', (req, res) => {
+    const fs = require('fs');
+    const dir = 'C:/Users/UserPC/Downloads';
+    const files = fs.readdirSync(dir);
+    var frames = [];
+    for (var file of files) {
+        var lastFour = file.substr(file.length - 4);
+        if (lastFour == '.png') {
+            frames.push(dir+ '/' + file);
+        }
+    }
+
+    // const ffmpeg = require('ffmpeg');
+    // const conv = ffmpeg() // create converter
+    // const input = conv.input({f: 'image2pipe', r: 30}) // create input writable stream
+    // conv.output('out.mp4', {vcodec: 'libx264', pix_fmt: 'yuv420p'}) // output to file
+
+    // // for every frame create a function that returns a promise
+    // frames.map(filename => () =>
+    // new Promise((fulfill, reject) =>
+    //     s3
+    //     .getObject({Bucket: '...', Key: filename})
+    //     .createReadStream()
+    //     .on('end', fulfill) // fulfill promise on frame end
+    //     .on('error', reject) // reject promise on error
+    //     .pipe(input, {end: false}) // pipe to converter, but don't end the input yet
+    //     )
+    // )
+    // // reduce into a single promise, run sequentially
+    // .reduce((prev, next) => prev.then(next), Promise.resolve())
+    // // end converter input
+    // .then(() => input.end())
+
+    // conv.run();
+});
