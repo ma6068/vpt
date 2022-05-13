@@ -231,6 +231,11 @@
         },
         {
           "type": "button",
+          "bind": "downloadImages",
+          "label": "Download images"
+        },
+        {
+          "type": "button",
           "bind": "createVideo",
           "label": "Create a video"
         }

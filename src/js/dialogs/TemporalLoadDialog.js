@@ -26,6 +26,7 @@ class TemporalLoadDialog extends AbstractDialog {
         this._handleDataSpinner = this._handleDataSpinner.bind(this);
         this._handleDataSlider = this._handleDataSlider.bind(this);
 
+        this._handleDownloadImages = this._handleDownloadImages.bind(this);
         this._handleCreateVideo = this._handleCreateVideo.bind(this);
         // Dodadeno kraj
 
@@ -52,6 +53,7 @@ class TemporalLoadDialog extends AbstractDialog {
         this._binds.timeErrorSpinner.addEventListener('change', this._handleTimeErrorSpinner);
 
         this._binds.createVideo.addEventListener('click', this._handleCreateVideo);
+        this._binds.downloadImages.addEventListener('click', this._handleDownloadImages);
         // Dodadeno kraj
     }
 
@@ -162,6 +164,20 @@ class TemporalLoadDialog extends AbstractDialog {
                 document.is_playing = false;
                 window.clearInterval(document.time_error_interval);
             } 
+        }
+    }
+
+    _handleDownloadImages() {
+        if (document.file_detail) {
+            // go stopirame ako e pusteno
+            if (document.is_playing) {
+                this._binds.playButton.setLabelValue('Play');
+                document.is_playing = false;
+                window.clearInterval(document.time_error_interval);           
+            }
+            console.log("tukaaaa sum!");
+            
+            document.temporal_images = [];  // na kraj ja cisteme tabelata so sliki
         }
     }
 
