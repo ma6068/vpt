@@ -25,8 +25,7 @@ app.post('/createVideo', (req, res) => {
         }
     }
     var videoShow = require("videoshow");
-    var ffmpeg = require("ffmpeg");
-    var images = ['C:/Users/UserPC/Downloads/image0.png', 'C:/Users/UserPC/Downloads/image1.png'];
+    var images = frames;
     var videoOptions = {
         loop: 5,
         fps: 25,
