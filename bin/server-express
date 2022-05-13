@@ -12,7 +12,7 @@ app.listen(app.get('port'), function () {
     console.log('Listening on port ' + app.get('port'));
 });
 
-app.get('/createVideo', (req, res) => {
+app.post('/createVideo', (req, res) => {
     const fs = require('fs');
     const dir = 'C:/Users/UserPC/Downloads';
     const files = fs.readdirSync(dir);

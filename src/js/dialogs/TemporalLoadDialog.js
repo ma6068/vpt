@@ -188,8 +188,9 @@ class TemporalLoadDialog extends AbstractDialog {
                 document.is_playing = false;
                 window.clearInterval(document.time_error_interval);           
             }
-            console.log("kliknat sum!");
-            
+            var request = new XMLHttpRequest();
+            request.open("POST", "/createVideo");
+            request.send();
             document.temporal_images = [];  // na kraj ja cisteme tabelata so sliki
         }
     }
