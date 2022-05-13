@@ -21,6 +21,7 @@ app.get('/createVideo', (req, res) => {
         var lastFour = file.substr(file.length - 4);
         if (lastFour == '.png') {
             frames.push(dir+ '/' + file);
+            console.log(dir+ '/' + file);
         }
     }
 

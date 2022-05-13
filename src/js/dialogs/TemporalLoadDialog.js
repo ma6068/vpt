@@ -118,11 +118,6 @@ class TemporalLoadDialog extends AbstractDialog {
     _loadNextData() {
         var canvas = document.getElementsByClassName("renderer");
         var image = canvas[0].toDataURL("image/png", 1.0);
-        var atag = document.createElement('a');
-        atag.download = "image" + String(document.temporal_image_index) + ".png";
-        atag.href = image;
-        atag.click();
-        document.temporal_image_index += 1;
         document.temporal_images.push(image);
         document.current_input += 1;
         if (document.current_input == document.max_input_data) {
@@ -175,8 +170,12 @@ class TemporalLoadDialog extends AbstractDialog {
                 document.is_playing = false;
                 window.clearInterval(document.time_error_interval);           
             }
-            console.log("tukaaaa sum!");
-            
+            var atag = document.createElement('a');
+            for(var i=0; i<document.temporal_images.length; i++) {
+                atag.download = "image" + String(i) + ".png";
+                atag.href = document.temporal_images[i];
+                atag.click();
+            }            
             document.temporal_images = [];  // na kraj ja cisteme tabelata so sliki
         }
     }
