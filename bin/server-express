@@ -14,7 +14,7 @@ app.listen(app.get('port'), function () {
 
 app.post('/createVideo', (req, res) => {
     const fs = require('fs');
-    const dir = 'C:/Users/UserPC/Downloads';
+    const dir = './src/downloadImages';
     const files = fs.readdirSync(dir);
     var frames = [];
     for (var file of files) {
@@ -40,7 +40,7 @@ app.post('/createVideo', (req, res) => {
         pixelFormat:'yuv420p'
     }
     videoShow(images, videoOptions)
-    .save("C:/Users/UserPC/Downloads/temporalVideo.mp4")
+    .save("./src/videoResult/temporalVideo.mp4")
     .on('start', function(command) {
         console.log('Kreiram video');
     })
