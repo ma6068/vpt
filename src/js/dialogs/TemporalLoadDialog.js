@@ -117,7 +117,7 @@ class TemporalLoadDialog extends AbstractDialog {
 
     _loadNextData() {
         var canvas = document.getElementsByClassName("renderer");
-        var image = canvas[0].toDataURL("image/png", 1.0);
+        var image = canvas[0].toDataURL();
         document.temporal_images.push(image);
         document.current_input += 1;
         if (document.current_input == document.max_input_data) {
